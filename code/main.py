@@ -2,10 +2,10 @@ import threading
 import subprocess
 
 def run_testing2():
-    subprocess.run(["python", "C:\\Users\\Swift3\\Desktop\\superrabbitch_shooting\\code\\testing2.py"])
+    subprocess.run(["python", "C:\\Users\\Swift3\\Desktop\\real_rabbit_shooting\\code\\testing2.py"])
 
 def run_hand_control():
-    subprocess.run(["python", "C:\\Users\\Swift3\\Desktop\\superrabbitch_shooting\\code\\hand_control.py"])
+    subprocess.run(["python", "C:\\Users\\Swift3\\Desktop\\real_rabbit_shooting\\code\\hand_control.py"])
 
 if __name__ == "__main__":
     # Create threads for running both scripts
