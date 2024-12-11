@@ -60,14 +60,14 @@
 </data>
  </layer>
  <objectgroup id="2" name="Entities">
-  <object id="1" name="Player" x="510" y="765.997">
+  <object id="1" name="Player" x="529.202" y="782.799">
    <point/>
   </object>
-  <object id="3" name="Worm" x="2240" y="320" width="499.19" height="64"/>
-  <object id="11" name="Worm" x="831.024" y="195.184" width="369.574" height="64"/>
-  <object id="12" name="Worm" x="70.1288" y="1342.53" width="304.766" height="64"/>
-  <object id="10" name="Worm" x="979.842" y="1083.3" width="299.965" height="64"/>
-  <object id="8" name="Worm" x="2021.57" y="831.264" width="576" height="64"/>
-  <object id="9" name="Worm" x="1731.14" y="178.382" width="491.989" height="64"/>
+  <object id="3" name="Worm" x="2292.81" y="305.598" width="230.356" height="64"/>
+  <object id="11" name="Worm" x="929.436" y="175.982" width="203.953" height="64"/>
+  <object id="12" name="Worm" x="187.744" y="1330.53" width="163.148" height="64"/>
+  <object id="10" name="Worm" x="1011.05" y="1076.1" width="155.947" height="64"/>
+  <object id="8" name="Worm" x="2074.38" y="814.462" width="302.366" height="64"/>
+  <object id="9" name="Worm" x="1817.55" y="183.183" width="239.957" height="64"/>
  </objectgroup>
 </map>
