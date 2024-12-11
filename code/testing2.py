@@ -145,13 +145,13 @@ class Game:
 
     def display_score(self): 
         font = pygame.font.Font(None, 36) 
-        score_surface = font.render(f'Score: {self.score}', True, (255, 255, 255)) 
+        score_surface = font.render(f'Score: {self.score}', True, (0, 0, 0)) 
         self.display_surface.blit(score_surface, (10, 10))  # Display score at the top-left corner 
 
     def display_countdown(self, elapsed_time): 
         remaining_time = max(0, self.game_duration - int(elapsed_time)) 
         font = pygame.font.Font(None, 36) 
-        countdown_surface = font.render(f'Time: {remaining_time}', True, (255, 255, 255)) 
+        countdown_surface = font.render(f'Time: {remaining_time}', True, (0, 0, 0)) 
         self.display_surface.blit(countdown_surface, (WINDOW_WIDTH - 100, 10))  # Display countdown at the top-right corner 
 
     def show_final_score(self): 
