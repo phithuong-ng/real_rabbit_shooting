@@ -1,4 +1,3 @@
-
 import pygame
 from settings import * 
 from sprites import * 
@@ -19,6 +18,7 @@ class Game:
         self.start_time = 0 
         self.game_duration = 60  # Default duration 
         self.mode = None  # Game mode
+        self.current_map = "world2.tmx"  # Start with world2.tmx
 
         # Groups 
         self.all_sprites = AllSprites() 
@@ -58,9 +58,12 @@ class Game:
         # Absolute path for sounds 
         self.audio = audio_importer(r'C:\Users\Swift3\Desktop\real_rabbit_shooting\audio')  # Updated path 
 
-    def setup(self, map_name="world2.tmx"): 
+    def setup(self, map_name=None): 
+        if map_name: 
+            self.current_map = map_name 
+        
         # Absolute path for map file 
-        tmx_map = load_pygame(rf'C:\Users\Swift3\Desktop\real_rabbit_shooting\data\maps\{map_name}')  # Updated path 
+        tmx_map = load_pygame(rf'C:\Users\Swift3\Desktop\real_rabbit_shooting\data\maps\{self.current_map}')  # Updated path 
         self.level_width = tmx_map.width * TILE_SIZE 
         self.level_height = tmx_map.height * TILE_SIZE 
 
@@ -125,8 +128,8 @@ class Game:
                     elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000 
                     if elapsed_time >= self.game_duration: 
                         self.running = False 
-                elif self.mode == 'Adventure' and self.score >= 500:
-                    self.switch_to_world_tmx()  # Switch to world.tmx when score reaches 500 
+                elif self.mode == 'Adventure' and self.score >= 500: 
+                    self.switch_map()  # Switch map when score reaches 500 
 
                 # Draw 
                 self.display_surface.fill(BG_COLOR) 
@@ -145,13 +148,13 @@ class Game:
 
     def display_score(self): 
         font = pygame.font.Font(None, 36) 
-        score_surface = font.render(f'Score: {self.score}', True, (255, 255, 255)) 
+        score_surface = font.render(f'Score: {self.score}', True, (0, 0, 0)) 
         self.display_surface.blit(score_surface, (10, 10))  # Display score at the top-left corner 
 
     def display_countdown(self, elapsed_time): 
         remaining_time = max(0, self.game_duration - int(elapsed_time)) 
         font = pygame.font.Font(None, 36) 
-        countdown_surface = font.render(f'Time: {remaining_time}', True, (255, 255, 255)) 
+        countdown_surface = font.render(f'Time: {remaining_time}', True, (0, 0, 0)) 
         self.display_surface.blit(countdown_surface, (WINDOW_WIDTH - 100, 10))  # Display countdown at the top-right corner 
 
     def show_final_score(self): 
@@ -277,7 +280,7 @@ class Game:
                     if elapsed_time >= self.game_duration:
                         self.running = False
                 elif self.mode == 'Adventure' and self.score >= 500:
-                    self.switch_to_world_tmx()  # Switch to world.tmx when score reaches 500
+                    self.switch_map()  # Switch map when score reaches 500
 
                 # Draw
                 self.display_surface.fill(BG_COLOR)
@@ -294,12 +297,17 @@ class Game:
         self.show_final_score()
         pygame.quit()
 
-    def switch_to_world_tmx(self):
+    def switch_map(self):
+        if self.current_map == "world2.tmx":
+            next_map = "world.tmx"
+        else:
+            next_map = "world2.tmx"
+
         self.all_sprites.empty()  # Clear previous sprites
         self.collision_sprites.empty()
         self.bullet_sprites.empty()
         self.enemy_sprites.empty()
-        self.setup("world.tmx")  # Load new map
+        self.setup(next_map)  # Load new map
         self.score = 0  # Reset score for the new map
         self.start_time = pygame.time.get_ticks()  # Reset start time
         self.bee_timer = Timer(100, func=self.create_bee, autostart=True, repeat=True)  # Reset bee timer
