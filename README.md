@@ -13,13 +13,7 @@
 
 ### 🎥 Demo Gameplay
 
-<iframe width="720" height="405" 
-        src="[https://www.youtube.com/embed/OVPGpsSBKdA?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3](https://www.youtube.com/embed/OVPGpsSBKdA?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3)" 
-        frameborder="0" 
-        allow="autoplay; encrypted-media; picture-in-picture" 
-        allowfullscreen>
-</iframe>
-
+https://www.youtube.com/embed/OVPGpsSBKdA?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3](https://www.youtube.com/embed/OVPGpsSBKdA?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3
 </div>
 
 ---
