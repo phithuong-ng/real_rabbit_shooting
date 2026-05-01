@@ -12,16 +12,9 @@
 ---
 
 ### 🎥 Demo Gameplay
-*(Video đã được thiết lập tự động chạy, tắt tiếng và ẩn toàn bộ thông tin định danh)*
+*(Click on the image below to watch the full gameplay video on YouTube)*
 
-<iframe width="720" height="405" 
-        src="[https://www.youtube.com/embed/OVPGpsSBKdA?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3](https://www.youtube.com/embed/OVPGpsSBKdA?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3)" 
-        frameborder="0" 
-        allow="autoplay; encrypted-media; picture-in-picture" 
-        allowfullscreen>
-</iframe>
-
-</div>
+[![Demo Real Rabbit Shooting](https://img.youtube.com/vi/OVPGpsSBKdA/maxresdefault.jpg)](https://www.youtube.com/watch?v=OVPGpsSBKdA "Click to Watch Gameplay!")
 
 ---
 
