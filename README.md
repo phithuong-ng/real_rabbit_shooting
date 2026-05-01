@@ -11,78 +11,74 @@
 
 ---
 
-### 🎥 Demo Gameplay
-*(Click on the image below to watch the full gameplay video on YouTube)*
-
-[![Demo Real Rabbit Shooting](https://img.youtube.com/vi/OVPGpsSBKdA/maxresdefault.jpg)](https://www.youtube.com/watch?v=OVPGpsSBKdA "Click to Watch Gameplay!")
-
 ---
 
-## 🧬 1. Kiến trúc Kỹ thuật & Cơ sở Toán học (Technical & Mathematical Foundations)
+## 🧬 1. Technical Architecture & Mathematical Foundations
 
-Dự án này không sử dụng bàn phím hay chuột truyền thống. Thay vào đó, nó giải mã luồng video trực tiếp (real-time video stream) để ánh xạ các mô hình hình học của bàn tay thành các tín hiệu điều khiển trong game.
+This project does not use a traditional keyboard or mouse. Instead, it decodes a real-time video stream to map hand geometric models into game control signals.
 
-### 📐 Trích xuất Tọa độ Không gian (Hand Landmark Extraction)
-Hệ thống (thường sử dụng MediaPipe) sẽ quét khung hình và dự đoán **21 điểm mốc (landmarks)** trên không gian 3 chiều $(x, y, z)$ của bàn tay. Mỗi điểm $L_i$ có tọa độ được chuẩn hóa (normalized) từ $0.0$ đến $1.0$ tương ứng với chiều rộng và chiều cao của khung hình video.
+### 📐 Hand Landmark Extraction
+The system (utilizing MediaPipe) scans the frame and predicts **21 landmarks** in 3D space $(x, y, z)$ on the hand. Each point $L_i$ has normalized coordinates ranging from $0.0$ to $1.0$, corresponding to the width and height of the video frame.
 
-### 📏 Thuật toán Nhận diện Trạng thái Ngón tay (Finger State Heuristics)
-Để xác định một ngón tay đang "gập" (Folded) hay "mở" (Out/Extended), thuật toán tính toán khoảng cách Euclidean giữa các khớp ngón tay.
-**Giải thích thuật ngữ:** *Khoảng cách Euclidean* là độ dài đoạn thẳng nối 2 điểm trong không gian. Công thức toán học đo khoảng cách giữa đầu ngón tay (Tip) $P_1(x_1, y_1)$ và khớp gốc ngón tay (MCP) $P_2(x_2, y_2)$ là:
+### 📏 Finger State Heuristics
+To determine whether a finger is "Folded" or "Extended", the algorithm calculates the Euclidean distance between the finger joints.
+**Technical Definition:** *Euclidean Distance* is the length of the line segment connecting two points in space. The mathematical formula to measure the distance between the fingertip ($P_1(x_1, y_1)$) and the metacarpophalangeal joint (MCP, $P_2(x_2, y_2)$) is:
 $$D = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
 
-**Quy trình logic:** Thuật toán sẽ so sánh tọa độ dọc ($y$-coordinate) của đầu ngón tay (Ví dụ: landmark 8 cho ngón trỏ) với tọa độ dọc của khớp PIP (landmark 6). Trong hệ tọa độ hình ảnh (trục y hướng xuống dưới):
-- Nếu $y_{tip} < y_{PIP}$: Ngón tay đang duỗi thẳng (Extended).
-- Nếu $y_{tip} > y_{PIP}$: Ngón tay đang gập lại (Folded).
+**Logical Flow:** The algorithm compares the vertical coordinate ($y$-coordinate) of the fingertip (e.g., landmark 8 for the index finger) with the vertical coordinate of the PIP joint (landmark 6). In the image coordinate system (where the y-axis points downwards):
+- If $y_{tip} < y_{PIP}$: The finger is Extended.
+- If $y_{tip} > y_{PIP}$: The finger is Folded.
 
 ---
 
-## 🕹️ 2. Hệ thống Khớp nối Cử chỉ (Gesture-to-Action Mapping)
+## 🕹️ 2. Gesture-to-Action Mapping
 
-Hệ thống điều khiển được thiết kế riêng cho **Bàn tay phải (Right Hand)**. Hãy hướng lòng bàn tay của bạn về phía Camera và thực hiện các tổ hợp sau:
+The control system is specifically designed for the **Right Hand**. Face your palm towards the camera and perform the following combinations:
 
-| ✊ Hình thái tay (Gesture) | 🧮 Trạng thái Logic | 🏃 Hành động của Thỏ (Action) |
+| ✊ Hand Gesture | 🧮 Logic State | 🏃 Rabbit Action |
 | :--- | :--- | :--- |
-| **Nắm đấm (Right Fist)** | Mọi ngón tay $y_{tip} > y_{PIP}$ | Không làm gì (Do nothing) 🛑 |
-| **Mở Ngón cái (Thumb out)** | Chỉ ngón cái thỏa mãn điều kiện mở | Nhảy lên (Jumping) ⬆️ |
-| **Mở Ngón trỏ (Index out)** | Chỉ ngón trỏ mở | Di chuyển sang Trái (Go left) ⬅️ |
-| **Mở Ngón giữa (Middle out)** | Chỉ ngón giữa mở | Di chuyển sang Phải (Go right) ➡️ |
-| **Mở Ngón út (Pinky out)** | Chỉ ngón út mở | Bắn đạn (Shooting) 🔫💥 |
+| **Right Fist** | All fingers $y_{tip} > y_{PIP}$ | Do nothing 🛑 |
+| **Thumb out** | Only thumb satisfies extended condition | Jumping ⬆️ |
+| **Index out** | Only index extended | Go left ⬅️ |
+| **Middle out** | Only middle extended | Go right ➡️ |
+| **Pinky out** | Only pinky extended | Shooting 🔫💥 |
 
-🔥 **Tính năng nâng cao:** Hệ thống ma trận trạng thái cho phép xử lý đa luồng (Multi-threading logic). Bạn hoàn toàn có thể kết hợp các ngón tay (ví dụ: mở ngón trỏ + ngón út) để Thỏ vừa chạy sang trái vừa bắn liên thanh!
+🔥 **Advanced Feature:** The state matrix system enables multi-threading logic. You can entirely combine fingers (e.g., extend index + pinky fingers) so the Rabbit can simultaneously run left and shoot continuously!
 
 ---
 
-## 🚀 3. Hướng dẫn Triển khai Cục bộ (Step-by-Step Setup Guide)
+## 🚀 3. Step-by-Step Local Deployment Guide
 
-Dưới đây là quy trình thao tác trực tiếp để khởi chạy dự án:
+Below is the hands-on workflow to execute the project locally:
 
-**Bước 1: Sao chép Mã nguồn (Clone the code)**
-Mở Terminal/Command Prompt và gõ:
+**Step 1: Clone the Repository**
+Open your Terminal/Command Prompt and run:
 ```bash
-git clone https://github.com/phithuong-ng/real_rabbit_shooting.git
+git clone [https://github.com/phithuong-ng/real_rabbit_shooting.git](https://github.com/phithuong-ng/real_rabbit_shooting.git)
 cd real_rabbit_shooting
 ```
 
-**Bước 2: Chuẩn bị Môi trường (Environment Setup)**
-Hãy đảm bảo bạn đã cài đặt Python 3.x. Khuyến nghị tạo môi trường ảo (virtual environment) để tránh xung đột thư viện:
+**Step 2: Environment Setup**
+Ensure you have Python 3.x installed. It is highly recommended to create a virtual environment to avoid library conflicts:
 ```bash
-# Cài đặt các thư viện lõi phục vụ xử lý hình ảnh và game engine
+# Install core libraries for image processing and game engine
 pip install opencv-python mediapipe pygame
 ```
 
-**Bước 3: Tinh chỉnh Đường dẫn (Directory Configuration)**
-*Lưu ý kỹ thuật:* Bạn cần mở các file mã nguồn và cấu hình lại các đường dẫn tuyệt đối/tương đối trỏ đến thư mục `audio`, `images`, và `data` sao cho khớp với cấu trúc thư mục trên máy tính cục bộ của bạn.
+**Step 3: Directory Configuration**
+*Technical Note:* You must open the source files and reconfigure the absolute/relative paths pointing to the `audio`, `images`, and `data` directories to perfectly match your local machine's directory structure.
 
-**Bước 4: Khởi chạy Trò chơi (Execution)**
+**Step 4: Game Execution**
 
-Hệ thống hỗ trợ 2 chế độ (Modes) phân biệt:
-- 🎮 **Chế độ Kỹ năng Thị giác Máy tính (Hand Gestures):** Khởi chạy file main để camera bắt đầu quét điểm ảnh.
-  ```bash
+The system supports 2 distinct modes:
+- 🎮 **Computer Vision Mode (Hand Gestures):** Execute the main file to initialize the camera pixel scanning.
+  
+```bash
   python main.py
   ```
-- ⌨️ **Chế độ Truyền thống (Keyboard mode):** Khởi chạy file testing để điều khiển Thỏ bằng bàn phím cơ bản.
+- ⌨️ **Traditional Mode (Keyboard):** Execute the testing file to control the Rabbit using basic keyboard inputs.
   ```bash
   python testing2.py
   ```
 
-*Chúc bạn trải nghiệm công nghệ Edge-Vision vui vẻ!* 🌟
+*Enjoy your Edge-Vision technology experience!* 🌟
