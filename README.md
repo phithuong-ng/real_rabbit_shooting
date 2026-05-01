@@ -10,9 +10,6 @@
 *An interactive arcade game completely driven by real-time Computer Vision and Hand Landmark Mathematics.* 🎮✨
 
 ---
-
----
-
 ## 🧬 1. Technical Architecture & Mathematical Foundations
 
 This project does not use a traditional keyboard or mouse. Instead, it decodes a real-time video stream to map hand geometric models into game control signals.
